@@ -4,17 +4,45 @@ import javax.swing.*;
 import java.io.*;
 
 public class Mundo extends JFrame implements KeyListener, ActionListener{
-	private JLabel player, floor1, floor2, torre;
-	private ImageIcon PlayerL, PlayerR, Grass, Tower;
+	private JLabel player, floor1, floor2, torre, banderas[] = new JLabel[8], mensaje, castillo, hechizeros[] = new JLabel[8];
+	private ImageIcon PlayerL, PlayerR, Grass, Tower, Castle;
 	static ElijePersonaje EP = new ElijePersonaje();
 	private JMenuBar mb1;
 	private JMenu m1, guardar;
 	private JMenuItem slot1, slot2, slot3;
 	int i = 0, x1 = 0, x2 = 1408, distanciaRecorrida = 0;
 	static boolean N = true, P = false, cambio = true;
+	private File aux = new File("IMAGENES/Banderas.png");
 	public Inicio ini = new Inicio();
 	
 	public Mundo(){
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(500,450);
+		this.setLayout(null);
+		this.addKeyListener(this);
+		getContentPane().setBackground(new Color(0,155,255));
+		
+		/*
+		for(int i = 0; i < 8; i++){
+			Flags[i] = new ImageIcon("IMAGENES/Bandera"+(i+12)+".png");
+			banderas[i] = new JLabel(Flags[i]);
+			banderas[i].setBounds((i+1) * 1850, 50, 150, 66);
+			this.add(banderas[i]);
+		}*/
+		
+		
+		//banderas[0] = new JLabel(Sprites.obtenerImagen(aux, 1, 150, 69));
+		banderas[0] = new JLabel(new ImageIcon("IMAGENES/Bandera1.png"));
+		banderas[0].setBounds(1850, 50, 150, 66);
+		banderas[0].setLayout(null);
+		this.add(banderas[0]);
+		
+		mensaje = new JLabel("     Entrar");
+		mensaje.setBounds(2100, 170, 65, 25);
+		mensaje.setOpaque(true);
+		mensaje.setVisible(false);
+		this.add(mensaje);
+		
 		Tower = new ImageIcon("IMAGENES/Torre2.png");
 		torre = new JLabel(Tower);
 		if(ini.info.length() != 0 && ini.continuar == true){
@@ -27,11 +55,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			torre.setBounds(2000, -110, 310, 420);
 		}
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(500,450);
-		this.setLayout(null);
-		this.addKeyListener(this);
-		getContentPane().setBackground(new Color(0,155,255));
+		
 		
 		Grass = new ImageIcon("IMAGENES/Grass2.png");
 		
@@ -53,15 +77,12 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		
 		floor1 = new JLabel(Grass);
 		floor1.setBounds(x1, 275, x2, 151);
-		floor1.setOpaque(true);
 		this.add(floor1);
 		
-		torre.setOpaque(true);
 		this.add(torre);
 		
 		floor2 = new JLabel(Grass);
 		floor2.setBounds(x1 + x2, 275, x2, 151);
-		floor2.setOpaque(true);
 		this.add(floor2);
 		
 		mb1 = new JMenuBar();
@@ -77,6 +98,19 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		slot1.addActionListener(this);
 		guardar.add(slot1);
 		
+		
+		hechizeros[0] = new JLabel(new ImageIcon("IMAGENES/blueWizard2.png"));
+		hechizeros[0].setBounds(750, 100, 177, 199);
+		hechizeros[0].setVisible(false);
+		hechizeros[0].setLayout(null);
+		this.add(hechizeros[0]);
+		
+		Castle = new ImageIcon("IMAGENES/KingsRoom3.png");
+		castillo = new JLabel(Castle);
+		castillo.setBounds(0, 0, 814, 403);
+		castillo.setVisible(false);
+		castillo.setLayout(null);
+		this.add(castillo);
 		
 		this.setVisible(true);
 	}
@@ -104,7 +138,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		//keyTyped = Invoked when a key is typed. Uses KeyChar, char output
-		int speed = 30;
+		
 		
 	}
 	
@@ -124,6 +158,16 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					floor1.setLocation(floor1.getX()+speed, floor1.getY());
 					floor2.setLocation(floor2.getX()+speed, floor2.getY());
 					torre.setLocation(torre.getX()+speed, torre.getY());
+					/*for(int i = 0; i < 8; i++){
+						banderas[i].setLocation(banderas[i].getX()+speed, banderas[i].getY());
+						this.add(banderas[i]);
+					}*/
+					
+					banderas[0].setLocation(banderas[0].getX()+speed, banderas[0].getY());
+					
+					castillo.setLocation(castillo.getX()+speed, castillo.getY());
+					hechizeros[0].setLocation(hechizeros[0].getX()+speed, hechizeros[0].getY());
+					mensaje.setLocation(mensaje.getX()+speed, mensaje.getY());
 					distanciaRecorrida -= speed;
 				}
 				
@@ -162,12 +206,33 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 				break;
 			case 39: //Derecha
 				
-				if(distanciaRecorrida <= 0){
+				if(distanciaRecorrida <= 0 && castillo.isVisible() == true){
 					player.setLocation(player.getX()+speed, player.getY());
-				}else{
+					distanciaRecorrida += speed;
+				}
+				else if(castillo.isVisible() == true && distanciaRecorrida < 315){
+					hechizeros[0].setLocation(hechizeros[0].getX()-speed, hechizeros[0].getY());
+					castillo.setLocation(castillo.getX()-speed, castillo.getY());
+					distanciaRecorrida += speed;
+				}
+				else if(distanciaRecorrida <= 0 && castillo.isVisible() == false){
+					player.setLocation(player.getX()+speed, player.getY());
+					distanciaRecorrida += speed;
+				}else if(distanciaRecorrida < 2050 && castillo.isVisible() == false){
 					floor1.setLocation(floor1.getX()-speed, floor1.getY());
 					floor2.setLocation(floor2.getX()-speed, floor2.getY());
 					torre.setLocation(torre.getX()-speed, torre.getY());
+					
+					/*for(int i = 0; i < 8; i++){
+						banderas[i].setLocation(banderas[i].getX()-speed, banderas[i].getY());
+						this.add(banderas[i]);
+					}*/
+					banderas[0].setLocation(banderas[0].getX()-speed, banderas[0].getY());
+					
+					hechizeros[0].setLocation(hechizeros[0].getX()-speed, hechizeros[0].getY());
+					castillo.setLocation(castillo.getX()-speed, castillo.getY());
+					mensaje.setLocation(mensaje.getX()-speed, mensaje.getY());
+					distanciaRecorrida += speed;
 				}
 				
 				if(floor2.getX() + (x2/2) < 216 && cambio == true){
@@ -201,7 +266,6 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 				}
 				
 				player.setIcon(PlayerR);
-				distanciaRecorrida += speed;
 				break;
 			case 38: 
 				
@@ -211,9 +275,40 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 				break;
 				
 		}
+		
+		if(distanciaRecorrida >= 1875 && distanciaRecorrida <= 1965){
+			mensaje.setVisible(true);
+		}else if(distanciaRecorrida == 315 && castillo.isVisible() == true){
+			mensaje.setText("     Pelear");
+			mensaje.setVisible(true);
+			mensaje.setLocation(220, 170);
+		}
+		else{
+			mensaje.setVisible(false);
+		}
+		
+		if(mensaje.isVisible() == true && e.getKeyCode() == 10 && castillo.isVisible() == false){
+			floor1.setVisible(false);
+			floor2.setVisible(false);
+			torre.setVisible(false);
+			banderas[0].setVisible(false);
+			mensaje.setVisible(false);
+			castillo.setVisible(true);
+			castillo.setLocation(-15, 0);
+			hechizeros[0].setVisible(true);
+			hechizeros[0].setLocation(610, 70);
+			distanciaRecorrida = 0;
+		}
+		else if(mensaje.isVisible() == true && e.getKeyCode() == 10 && castillo.isVisible() == true){
+			Problema n4 = new Problema();
+			n4.setBounds(0,0,500,450);
+			n4.setVisible(true);
+			n4.setResizable(false);
+			n4.setLocationRelativeTo(null);
+			this.setVisible(false);
+		}
+		
 		System.out.println(distanciaRecorrida);
-		//System.out.println("F1 X: " + floor1.getX() + " PM: " + (floor1.getX() + (x2 / 2)));
-		//System.out.println("F2 X: " + floor2.getX() + "\n");
 	}
 
 	@Override

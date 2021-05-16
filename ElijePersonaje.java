@@ -1,10 +1,13 @@
 import javax.swing.*; //Interfaz grafica
 import java.awt.Color;
 import java.awt.event.*; //Boton
+import java.io.*; //File
 
 public class ElijePersonaje extends JFrame implements ActionListener{
 	private JLabel personaje, hom, mu;
 	private JButton hombre, mujer, siguiente;
+	//private Sprites sprite;
+	private File aux = new File("IMAGENES/NessSprites.png");
 	static boolean N = false, P = false;
 	
 	public ElijePersonaje(){
@@ -23,6 +26,7 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 		add(mu);
 		
 		ImageIcon nino = new ImageIcon("IMAGENES/NessFront1.png");
+		//ImageIcon nino = Sprites.obtenerImagen(aux, 5, 68, 108);
 		hom = new JLabel(nino);
 		hom.setBounds(140,70,70,110);
 		hom.setVisible(false);

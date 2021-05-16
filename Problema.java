@@ -18,7 +18,7 @@ public class Problema extends JFrame implements ActionListener{
 		
 		getContentPane().setBackground(new Color(50,255,100));
 		
-		ImageIcon imagen = new ImageIcon("IMAGENES/evilWizard2.png");
+		ImageIcon imagen = new ImageIcon("IMAGENES/blueWizard2.png");
 		wiz = new JLabel(imagen);
 		wiz.setBounds(130,20,200,200);
 		wiz.setVisible(true);
