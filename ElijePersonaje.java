@@ -1,5 +1,5 @@
 import javax.swing.*; //Interfaz grafica
-import java.awt.Color;
+import java.awt.Color; //Color
 import java.awt.event.*; //Boton
 import java.io.*; //File
 
@@ -8,12 +8,18 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 	private JButton hombre, mujer, siguiente;
 	//private Sprites sprite;
 	private File aux = new File("IMAGENES/NessSprites.png");
-	static boolean N = false, P = false;
+	private Personaje per = new Personaje();
+	private Audio audio = new Audio();
 	
 	public ElijePersonaje(){
+		
 		setLayout(null);
+		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/icono.png")).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(50,155,250));
+		this.setBounds(0,0,300,300);
+		this.setVisible(true);
+		this.setLocationRelativeTo(null);
 		
 		personaje = new JLabel("Haz tu personaje");
 		personaje.setBounds(80,10,300,30);
@@ -25,7 +31,7 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 		mu.setVisible(false);
 		add(mu);
 		
-		ImageIcon nino = new ImageIcon("IMAGENES/NessFront1.png");
+		ImageIcon nino = new ImageIcon("IMAGENES/NessFront.png");
 		//ImageIcon nino = Sprites.obtenerImagen(aux, 5, 68, 108);
 		hom = new JLabel(nino);
 		hom.setBounds(140,70,70,110);
@@ -49,27 +55,26 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 		siguiente.setEnabled(false);
 		add(siguiente);
 		siguiente.addActionListener(this);
-		//b2.setVisible(false);
+		
+		audio.Musica("EligePersonaje");
 	}
 	
 	public void actionPerformed(ActionEvent c){
 		if(c.getSource() == hombre){
 			hom.setVisible(true);
 			mu.setVisible(false);
-			N = true;
-			P = false;
+			per.setGenero("hombre");
 			siguiente.setEnabled(true);
 		}
 		else if(c.getSource() == mujer){
 			hom.setVisible(false);
 			mu.setVisible(true);
-			N = false;
-			P = true;
+			per.setGenero("mujer");
 			siguiente.setEnabled(true);
 		}
 		else if(c.getSource() == siguiente){
-			Mundo n3 = new Mundo();
-			//Problema n3 = new Problema();
+			Audio.detener();
+			Mundo n3 = new Mundo(per);
 			n3.setBounds(0,0,500,450);
 			n3.setVisible(true);
 			n3.setResizable(false);
@@ -78,10 +83,4 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 		}
 	}
 	
-	public static void main(String args[]){
-		ElijePersonaje n2 = new ElijePersonaje();
-		n2.setBounds(0,0,300,300);
-		n2.setVisible(true);
-		n2.setLocationRelativeTo(null);
-	}
 }

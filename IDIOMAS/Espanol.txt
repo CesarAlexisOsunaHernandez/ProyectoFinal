@@ -1,0 +1,4 @@
+Heroe_Matematico:_Primaria Nuevo_Juego Continuar Idioma Cerrar
+Haz_tu_personaje Ni\u00f1o Ni\u00f1a Siguiente
+Opciones Guardar Espacio_1 Espacio_2 Espacio_3 Entrar Pelear
+Vida Vidas Correcto Incorrecto Ataque_facil Ataque_dificil

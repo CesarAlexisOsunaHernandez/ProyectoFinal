@@ -1,53 +1,57 @@
-import java.io.*;
-import java.awt.Color;
-import javax.swing.*; //Interfaz grafica
-import java.awt.event.*; //Boton
-import java.util.Scanner;
-import java.io.FileNotFoundException;
+import java.awt.Color; //Color
 import javax.swing.*; //Interfaz grafica
 import java.awt.event.*; //Boton ComboBox
 import javax.swing.event.*; //Checkbox
-import java.awt.*; //Color
 
-import java.io.File;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-public class Inicio extends JFrame implements ActionListener, ItemListener{
+public class Inicio extends JFrame implements ActionListener{
 	private JLabel titulo;
 	private JButton nuevoJuego, continuarJuego, salir, idioma;
 	private JComboBox cb;
-	public static String info = "";
-	static boolean continuar = false;
+	private Serializadora ser = new Serializadora();
+	private Audio audio = new Audio();
+	private String idiomas[] = {"Espa\u00f1ol", "English"}, Espanol, Ingles;
 	
 	public Inicio(){
 		setLayout(null);
+		//setTitle("Heroe Matematico: Primaria");
+		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/icono.png")).getImage());
+		this.setBounds(0,0,300,350);
+		this.setVisible(true);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
 		getContentPane().setBackground(new Color(50,155,250));
-		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		info = "";
 		
 		titulo = new JLabel("Heroe Matematico: Primaria");
 		titulo.setBounds(60,10,300,30);
 		add(titulo);
 		
 		nuevoJuego = new JButton("Nuevo juego");
-		nuevoJuego.setBounds(85,100,110,30); //setBounds(x,y,width,height)
+		nuevoJuego.setBounds(85,100,110,30);
 		add(nuevoJuego);
 		nuevoJuego.addActionListener(this);
 		
-		continuarJuego = new JButton("Continuar");
-		continuarJuego.setBounds(85,150,110,30); //setBounds(x,y,width,height)
-		add(continuarJuego);
-		continuarJuego.addActionListener(this);
-		buscarContinue();
-		
-		/*
 		idioma = new JButton("Idioma");
-		idioma.setBounds(85,200,110,30); //setBounds(x,y,width,height)
+		idioma.setBounds(85,200,110,30);
 		//idioma.setFont(new Font("Andale Mono", 1, 30));
 		add(idioma);
 		idioma.addActionListener(this);
+		
+		salir = new JButton("Cerrar");
+		salir.setBounds(85,250,110,30);
+		add(salir);
+		salir.addActionListener(this);
+		
+		continuarJuego = new JButton("Continuar");
+		continuarJuego.setBounds(85,150,110,30);
+		add(continuarJuego);
+		continuarJuego.addActionListener(this);
+		
+		for(int i = 0; i < 3 ; i++){
+			if(ser.leerObjeto(i+1) == null){
+				continuarJuego.setEnabled(false);
+			}
+		}
 		
 		cb = new JComboBox();
 		cb.setBounds(10,10,80,20);
@@ -56,24 +60,19 @@ public class Inicio extends JFrame implements ActionListener, ItemListener{
 		
 		cb.addItem("Espa\u00f1ol");
 		cb.addItem("English");
+		/*
 		cb.addItem("Francais");
 		cb.addItem("\u0639\u0631\u0628");
 		cb.addItemListener(this);
 		*/
 		
-		
-		salir = new JButton("Cerrar");
-		salir.setBounds(85,200,110,30); //setBounds(x,y,width,height)
-		add(salir);
-		salir.addActionListener(this);
-		
-		
-				
-		
+		audio.Musica("Inicio");
 	}
 	
-	public void actionPerformed(ActionEvent c){
+	public void actionPerformed(ActionEvent c){ //Botones
+		
 		if(c.getSource() == nuevoJuego){
+			Audio.detener();
 			ElijePersonaje n2 = new ElijePersonaje();
 			n2.setBounds(0,0,300,300);
 			n2.setVisible(true);
@@ -82,105 +81,34 @@ public class Inicio extends JFrame implements ActionListener, ItemListener{
 			this.setVisible(false);
 		}
 		else if(c.getSource() == continuarJuego){
-			this.continuar = true;
-			Mundo n3 = new Mundo();
-			n3.setBounds(0,0,500,450);
-			n3.setVisible(true);
-			n3.setResizable(false);
-			n3.setLocationRelativeTo(null);
-			this.setVisible(false);
+			Audio.detener();
+			int input, op;
+			String ops[] = {"1","2","3"};
+			JComboBox cb = new JComboBox(ops);
+			input = JOptionPane.showConfirmDialog(this, cb, "Espacio", JOptionPane.DEFAULT_OPTION);
+			if(input == JOptionPane.OK_OPTION){
+				op = Integer.parseInt((String)cb.getSelectedItem());
+				Mundo n3 = new Mundo((Personaje)ser.leerObjeto(op));
+				n3.setBounds(0,0,500,450);
+				n3.setVisible(true);
+				n3.setResizable(false);
+				n3.setLocationRelativeTo(null);
+				this.setVisible(false);
+			}
 		}
 		else if(c.getSource() == idioma){
-			titulo.setVisible(false);
-			nuevoJuego.setVisible(false);
-			continuarJuego.setVisible(false);
-			salir.setVisible(false);
-			idioma.setVisible(false);
-			cb.setVisible(true);
+			JComboBox cb = new JComboBox(idiomas);
+			int input = JOptionPane.showConfirmDialog(this, cb, "OK", JOptionPane.DEFAULT_OPTION);
+			if(input == JOptionPane.OK_OPTION){
+				String str = (String)cb.getSelectedItem();
+				System.out.println(str);
+			}
 			
 		}
 		else if(c.getSource() == salir){
+			Audio.detener();
 			System.exit(0);
 		}
-	}
-	
-	public void buscarContinue(){
-		try {
-			File cont1 = new File("CONTINUES/con1.txt");
-			Scanner scan = new Scanner(cont1);
-			
-			if(cont1.length() > 0){
-				while(scan.hasNextLine()){
-					info += scan.nextLine();
-				}
-				scan.close();
-			}
-			else{
-				continuarJuego.setEnabled(false);
-			}
-		} catch (FileNotFoundException e) {
-		  System.out.println("An error occurred.");
-		  e.printStackTrace();
-		}
-	}
-	
-	public void itemStateChanged(ItemEvent c){
-		String aux;
-		if(c.getSource() == cb){
-			aux = cb.getSelectedItem().toString();
-			if(aux == "Espa\u00f1ol"){
-				titulo.setText("Heroe Matematico: Primaria");
-				nuevoJuego.setText("Nuevo juego");
-				continuarJuego.setText("Continuar");
-				salir.setText("Salir");
-				idioma.setText("Idioma");
-			}
-			else if(aux == "English"){
-				titulo.setText("Math Hero: Elementary");
-				nuevoJuego.setText("New game");
-				continuarJuego.setText("Continue");
-				salir.setText("Exit");
-				idioma.setText("Language");
-			}
-			else if(aux == "\u0639\u0631\u0628"){
-				
-				titulo.setText("\u0627\u0644\u0631\u062C\u0644 \u0627\u0644\u062E\u0627\u0631\u0642 \u0627\u0644\u0634\u062E\u0635 \u0627\u0644\u0630\u0643\u064A: ");
-				
-				nuevoJuego.setText("\u0627\u0644\u0644\u0645\u0628 \u0628\u0627\u0627\u064A \u0633\u062A\u064A\u0634\u0646");
-				continuarJuego.setText("\u0627\u0643\u0645\u0627\u0644 \u0627\u0644\u0644\u0639\u0628\u0629");
-				idioma.setText("\u0627\u0644\u0644\u063A\u0629");
-				salir.setText("\u0627\u0644\u062E\u0631\u0648\u062C \u0645\u0646 \u0627\u0644\u0644\u0639\u0628\u0629");
-			}
-			
-			titulo.setVisible(true);
-			nuevoJuego.setVisible(true);
-			continuarJuego.setVisible(true);
-			salir.setVisible(true);
-			idioma.setVisible(true);
-			cb.setVisible(false);
-		}
-	}
-	
-	public static void main(String args[]){
-		Inicio n1 = new Inicio();
-		n1.setBounds(0,0,300,330);
-		n1.setVisible(true);
-		n1.setLocationRelativeTo(null);
 		
-		
-		com.sun.javafx.application.PlatformImpl.startup(()->{});
-			
-		//final String NOMBRE_ARCHIVO = "MUSICA/1.mp3";
-		File archivo = new File("MUSICA/1.mp3");
-				
-		Media audio = new Media(archivo.toURI().toString());
-		MediaPlayer reproductor = new MediaPlayer(audio);
-		
-		int i=0;
-		while (i<20000*20){ //20,000 = 1s
-			reproductor.play();
-			i++;
-			//System.out.println(i);
-		}
 	}
 }

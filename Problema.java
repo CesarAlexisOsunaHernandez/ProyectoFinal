@@ -1,30 +1,71 @@
 import javax.swing.*; //Interfaz grafica
-import java.awt.Color;
+import java.awt.Color; //Color
 import java.awt.event.*; //Boton, Textbox
 import java.util.*; //Random
-import java.io.File;
-import java.io.FileWriter;   // Import the FileWriter class
-import java.io.IOException;
 
 public class Problema extends JFrame implements ActionListener{
-	private JLabel vidas, probl, msg, wiz, vidaWizLb;
-	private JButton An1, An2, An3, easyAttack, hardAttack, volver, probar;
+	private JLabel vidas, probl, msg, vidaWizLb, hechizeros[] = new JLabel[8];
+	private JButton An1, An2, An3, easyAttack, hardAttack, volver, probar, accionesFinales[] = new JButton[3];
 	private JTextField res;
-	private int lives = 3, A = 0, B = 0, C = 0, difi = 2, n1 = 0, n2 = 0, vidaWiz = 10;
+	private int lives = 3, A = 0, B = 0, C = 0, dificultadInicial = 1, n1 = 0, n2 = 0, vidaHechizeros = 10, aumentoDeDificultad = 1, ataqueFacil = 1, ataqueDificil = 3;
+	private Serializadora ser = new Serializadora();
+	private Personaje per = new Personaje();
+	private Audio audio = new Audio();
 	
-	public Problema(){
+	public Problema(Personaje per){
 		setLayout(null);
+		setTitle("Heroe Matematico: Primaria");
+		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/icono.png")).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setBounds(0,0,500,450);
+		this.setVisible(true);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
 		
-		getContentPane().setBackground(new Color(50,255,100));
+		this.per.setDistancia(per.getDistancia());
+		this.per.setJefe(per.getJefe());
+		this.per.setGenero(per.getGenero());
+		this.per.setCastillo(per.getCastillo());
 		
-		ImageIcon imagen = new ImageIcon("IMAGENES/blueWizard2.png");
-		wiz = new JLabel(imagen);
-		wiz.setBounds(130,20,200,200);
-		wiz.setVisible(true);
-		add(wiz);
+		switch(per.getJefe()){
+			case 0: //Blanco
+			getContentPane().setBackground(new Color(240,240,240));
+			break;
+			case 1: //Amarillo
+			getContentPane().setBackground(new Color(230,245,0));
+			break;
+			case 2: //Verde
+			getContentPane().setBackground(new Color(0,220,70));
+			break;
+			case 3: //Azul
+			getContentPane().setBackground(new Color(0,80,200));
+			break;
+			case 4: //Marron
+			getContentPane().setBackground(new Color(170,130,80));
+			break;
+			case 5: //Rojo
+			getContentPane().setBackground(new Color(240,30,0));
+			break;
+			case 6: //Negro
+			getContentPane().setBackground(new Color(40,40,40));
+			break;
+			case 7: //???
+			getContentPane().setBackground(new Color(100,0,0));
+			break;
+		}
 		
-		vidaWizLb = new JLabel("Vida: " + vidaWiz);
+		asignaDificultad(per.getJefe());
+		
+		for(int i = 0; i < 8; i++){
+			hechizeros[i] = new JLabel(new ImageIcon("IMAGENES/Wizard"+(i+1)+".png"));
+			hechizeros[i].setBounds(130,20,210,210);
+			hechizeros[i].setVisible(false);
+			add(hechizeros[i]);
+		}
+		hechizeros[per.getJefe()].setVisible(true);
+		audio.Musica("Jefe" + (per.getJefe()+1));
+		
+		vidaWizLb = new JLabel("Vida: " + vidaHechizeros);
 		vidaWizLb.setBounds(420,5,300,30);
 		add(vidaWizLb);
 		
@@ -50,7 +91,7 @@ public class Problema extends JFrame implements ActionListener{
 		add(hardAttack);
 		hardAttack.addActionListener(this);
 		
-		volver = new JButton("back");
+		volver = new JButton("volver");
 		volver.setBounds(390,360,80,30); //setBounds(x,y,width,height)
 		add(volver);
 		volver.addActionListener(this);
@@ -84,6 +125,15 @@ public class Problema extends JFrame implements ActionListener{
 		add(probar);
 		probar.addActionListener(this);
 		probar.setVisible(false);
+		
+		
+		for(int i = 0; i < 3; i++){
+			accionesFinales[i] = new JButton();
+			accionesFinales[i].setBounds(170,(i*50)+280,130,30);
+			add(accionesFinales[i]);
+			accionesFinales[i].addActionListener(this);
+			accionesFinales[i].setVisible(false);
+		}
 		
 		asignaValores();
 	}
@@ -119,8 +169,8 @@ public class Problema extends JFrame implements ActionListener{
 			if(A == n1 + n2){
 				asignaValores();
 				msg.setText("Correcto");
-				vidaWiz--;
-				vidaWizLb.setText("Vida: " + vidaWiz);
+				vidaHechizeros -= ataqueFacil;
+				vidaWizLb.setText("Vida: " + vidaHechizeros);
 			}
 			else{
 				lives--;
@@ -132,8 +182,8 @@ public class Problema extends JFrame implements ActionListener{
 			if(B == n1 + n2){
 				asignaValores();
 				msg.setText("Correcto");
-				vidaWiz--;
-				vidaWizLb.setText("Vida: " + vidaWiz);
+				vidaHechizeros -= ataqueFacil;
+				vidaWizLb.setText("Vida: " + vidaHechizeros);
 			}
 			else{
 				lives--;
@@ -145,8 +195,8 @@ public class Problema extends JFrame implements ActionListener{
 			if(C == n1 + n2){
 				asignaValores();
 				msg.setText("Correcto");
-				vidaWiz--;
-				vidaWizLb.setText("Vida: " + vidaWiz);
+				vidaHechizeros -= ataqueFacil;
+				vidaWizLb.setText("Vida: " + vidaHechizeros);
 			}
 			else{
 				lives--;
@@ -158,8 +208,8 @@ public class Problema extends JFrame implements ActionListener{
 			if(res.getText().equals(Integer.toString((n1 + n2)))){
 				asignaValores();
 				msg.setText("Correcto");
-				vidaWiz-=3;
-				vidaWizLb.setText("Vida: " + vidaWiz);
+				vidaHechizeros -= ataqueDificil;
+				vidaWizLb.setText("Vida: " + vidaHechizeros);
 				res.setText("");
 			}
 			else{
@@ -168,14 +218,42 @@ public class Problema extends JFrame implements ActionListener{
 				msg.setText("Falso");
 			}
 		}
+		else if(c.getSource() == accionesFinales[0]){
+			Mundo n3;
+			Audio.detener();
+			if(accionesFinales[0].getText().equals("Continuar")){
+				per.setJefe(per.getJefe() + 1);
+				n3 = new Mundo(per);
+			}
+			else{
+				n3 = new Mundo((Personaje)ser.leerObjeto(1));
+			}
+			
+			n3.setBounds(0,0,500,450);
+			n3.setVisible(true);
+			n3.setResizable(false);
+			n3.setLocationRelativeTo(null);
+			this.setVisible(false);
+		}
+		else if(c.getSource() == accionesFinales[1]){
+			Audio.detener();
+			Inicio n1 = new Inicio();
+			n1.setBounds(0,0,300,330);
+			n1.setVisible(true);
+			n1.setResizable(false);
+			n1.setLocationRelativeTo(null);
+			this.setVisible(false);
+		}
+		else if(c.getSource() == accionesFinales[2]){
+			System.exit(0);
+		}
 		
-		
-		if(vidaWiz <= 0){
+		if(vidaHechizeros <= 0){
 			vidaWizLb.setText("Vida: 0");
-			probl.setText("WELL DONE");
+			probl.setText("FELICIDADES!");
 			msg.setText("");
-			easyAttack.setVisible(true);
-			hardAttack.setVisible(true);
+			easyAttack.setVisible(false);
+			hardAttack.setVisible(false);
 			An1.setVisible(false);
 			An2.setVisible(false);
 			An3.setVisible(false);
@@ -184,14 +262,60 @@ public class Problema extends JFrame implements ActionListener{
 			res.setVisible(false);
 			easyAttack.setEnabled(false);
 			hardAttack.setEnabled(false);
+			
+			accionesFinales[0].setText("Continuar");
+			accionesFinales[0].setVisible(true);
+			if(this.isVisible()){
+				Audio.detener();
+				audio.Musica("Victoria");
+			}
+			
 		}
 		
 		if(lives == 0){
-			probl.setText("GAME OVER");
+			probl.setText("PERDISTE");
 			msg.setText("");
-			An1.setEnabled(false);
-			An2.setEnabled(false);
-			An3.setEnabled(false);
+			easyAttack.setVisible(false);
+			hardAttack.setVisible(false);
+			An1.setVisible(false);
+			An2.setVisible(false);
+			An3.setVisible(false);
+			volver.setVisible(false);
+			probar.setVisible(false);
+			res.setVisible(false);
+			easyAttack.setEnabled(false);
+			hardAttack.setEnabled(false);
+			
+			for(int i = 0; i < 3; i++){
+				switch(i){
+					case 0:
+					accionesFinales[i].setText("Punto guardado");
+					break;
+					case 1:
+					accionesFinales[i].setText("Menu principal");
+					break;
+					case 2:
+					accionesFinales[i].setText("Cerrar");
+					break;
+				}
+				
+				accionesFinales[i].setVisible(true);
+			}
+			
+			if(this.isVisible()){
+				Audio.detener();
+				audio.Musica("Derrota");
+			}
+		}
+		
+		if(per.getJefe() == 7){
+			JOptionPane.showMessageDialog(null, "Completaste mi juego!!!", "Felicidades!!!", JOptionPane.PLAIN_MESSAGE);
+			Inicio n1 = new Inicio();
+			n1.setBounds(0,0,300,330);
+			n1.setVisible(true);
+			n1.setResizable(false);
+			n1.setLocationRelativeTo(null);
+			this.setVisible(false);
 		}
 	}
 	
@@ -199,11 +323,11 @@ public class Problema extends JFrame implements ActionListener{
 		int v1, v2;
 		Random ran = new Random();
 		
-		difi++;
-		n1 = ran.nextInt(difi) + 1;
-		n2 = ran.nextInt(difi) + 1;
-		v1 = ran.nextInt(difi) + 1;
-		v2 = ran.nextInt(difi) + 1;
+		dificultadInicial += aumentoDeDificultad;
+		n1 = ran.nextInt(dificultadInicial) + 1;
+		n2 = ran.nextInt(dificultadInicial) + 1;
+		v1 = ran.nextInt(dificultadInicial) + 1;
+		v2 = ran.nextInt(dificultadInicial) + 1;
 		
 		A = ran.nextInt(30);
 		B = ran.nextInt(30);
@@ -280,23 +404,13 @@ public class Problema extends JFrame implements ActionListener{
 		probl.setText(n1 + " + " + n2 + " = ?");
 	}
 	
-	public void setLives(int lives){
-		this.lives = lives;
-	}
-	
-	public void setDifi(int difi){
-		this.difi = difi;
-	}
-	
-	public void setVidaWiz(int vidaWiz){
-		this.vidaWiz = vidaWiz;
-	}
-	
-	public static void main(String args[]){
-		Problema Ma = new Problema();
-		Ma.setBounds(0,0,500,450);
-		Ma.setVisible(true);
-		Ma.setResizable(false);
-		Ma.setLocationRelativeTo(null);
+	public void asignaDificultad(int i){
+		for(int j = 0; j < i; j++){
+			this.dificultadInicial *= 10;
+			this.aumentoDeDificultad *= 10;
+			this.vidaHechizeros += 10;
+			this.ataqueFacil++;
+			this.ataqueDificil += 2;
+		}
 	}
 }
