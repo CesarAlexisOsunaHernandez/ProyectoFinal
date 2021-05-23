@@ -154,6 +154,30 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			per.setDistancia(distanciaRecorrida);
 			ser.escribirObjeto(per, 3);
 		}
+		else if(a.getSource() == alto){
+			audio.setVolume((float)1.0);
+		}
+		else if(a.getSource() == medio){
+			audio.setVolume((float)0.5);
+		}
+		else if(a.getSource() == bajo){
+			audio.setVolume((float)0.1);
+		}
+		else if(a.getSource() == silencio){
+			audio.setVolume((float)0.0);
+		}
+		else if(a.getSource() == idioma){
+			JComboBox cb = new JComboBox(idiomas);
+			int input = JOptionPane.showConfirmDialog(this, cb, "Idioma", JOptionPane.DEFAULT_OPTION);
+			if(input == JOptionPane.OK_OPTION){
+				String str = (String)cb.getSelectedItem();
+				System.out.println(str);
+			}
+		}
+		else if(a.getSource() == salir){
+			
+		}
+		
 	}
 	
 	@Override
@@ -219,7 +243,6 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 				}
 				
 				player.setIcon(PlayerL);
-				
 				break;
 			case 39: //Derecha
 				
@@ -284,13 +307,6 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 				
 				player.setIcon(PlayerR);
 				break;
-			/*case 38: 
-				
-				break;
-			case 40: 
-				
-				break;
-			*/	
 		}
 		
 		if(distanciaRecorrida >= 1875 && distanciaRecorrida <= 1965){
@@ -328,14 +344,8 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			n4.setLocationRelativeTo(null);
 			this.setVisible(false);
 		}
-		
-		//System.out.println(hechizeros[per.getJefe()].getX());
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		//keyReleased = called whenever a button is released
-		//System.out.println("You released key char: " + e.getKeyChar());
-		//System.out.println("You released key code: " + e.getKeyCode());
-	}
+	public void keyReleased(KeyEvent e) {}
 }

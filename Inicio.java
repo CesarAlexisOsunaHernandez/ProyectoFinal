@@ -98,7 +98,7 @@ public class Inicio extends JFrame implements ActionListener{
 		}
 		else if(c.getSource() == idioma){
 			JComboBox cb = new JComboBox(idiomas);
-			int input = JOptionPane.showConfirmDialog(this, cb, "OK", JOptionPane.DEFAULT_OPTION);
+			int input = JOptionPane.showConfirmDialog(this, cb, "Idioma", JOptionPane.DEFAULT_OPTION);
 			if(input == JOptionPane.OK_OPTION){
 				String str = (String)cb.getSelectedItem();
 				System.out.println(str);
