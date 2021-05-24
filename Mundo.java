@@ -15,6 +15,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 	private Serializadora ser = new Serializadora();
 	private Personaje per = new Personaje();
 	private Audio audio = new Audio();
+	private String idiomas[] = {"Espa\u00f1ol", "English"}, Espanol, Ingles;
 	
 	public Mundo(Personaje per){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -5,7 +5,7 @@ import java.util.*; //Random
 
 public class Problema extends JFrame implements ActionListener{
 	private JLabel vidas, probl, msg, vidaWizLb, hechizeros[] = new JLabel[8];
-	private JButton An1, An2, An3, easyAttack, hardAttack, volver, probar, accionesFinales[] = new JButton[3];
+	private JButton Ans[] = new JButton[3], An2, An3, easyAttack, hardAttack, volver, probar, accionesFinales[] = new JButton[3];
 	private JTextField res;
 	private int lives = 3, A = 0, B = 0, C = 0, dificultadInicial = 1, n1 = 0, n2 = 0, vidaHechizeros = 10, aumentoDeDificultad = 1, ataqueFacil = 1, ataqueDificil = 3;
 	private Serializadora ser = new Serializadora();
@@ -26,33 +26,6 @@ public class Problema extends JFrame implements ActionListener{
 		this.per.setJefe(per.getJefe());
 		this.per.setGenero(per.getGenero());
 		this.per.setCastillo(per.getCastillo());
-		
-		switch(per.getJefe()){
-			case 0: //Blanco
-			getContentPane().setBackground(new Color(240,240,240));
-			break;
-			case 1: //Amarillo
-			getContentPane().setBackground(new Color(230,245,0));
-			break;
-			case 2: //Verde
-			getContentPane().setBackground(new Color(0,220,70));
-			break;
-			case 3: //Azul
-			getContentPane().setBackground(new Color(0,80,200));
-			break;
-			case 4: //Marron
-			getContentPane().setBackground(new Color(170,130,80));
-			break;
-			case 5: //Rojo
-			getContentPane().setBackground(new Color(240,30,0));
-			break;
-			case 6: //Negro
-			getContentPane().setBackground(new Color(40,40,40));
-			break;
-			case 7: //???
-			getContentPane().setBackground(new Color(100,0,0));
-			break;
-		}
 		
 		asignaDificultad(per.getJefe());
 		
@@ -77,7 +50,7 @@ public class Problema extends JFrame implements ActionListener{
 		vidas.setBounds(10,250,300,30);
 		add(vidas);
 		
-		probl = new JLabel(n1 + " + " + n2 + " = ?");
+		probl = new JLabel();
 		probl.setBounds(200,250,300,30);
 		add(probl);
 		
@@ -97,23 +70,15 @@ public class Problema extends JFrame implements ActionListener{
 		volver.addActionListener(this);
 		volver.setVisible(false);
 		
-		An1 = new JButton(Integer.toString(A));
-		An1.setBounds(10,300,80,30); //setBounds(x,y,width,height)
-		add(An1);
-		An1.addActionListener(this);
-		An1.setVisible(false);
 		
-		An2 = new JButton(Integer.toString(B));
-		An2.setBounds(200,300,80,30); //setBounds(x,y,width,height)
-		add(An2);
-		An2.addActionListener(this);
-		An2.setVisible(false);
-		
-		An3 = new JButton(Integer.toString(C));
-		An3.setBounds(390,300,80,30); //setBounds(x,y,width,height)
-		add(An3);
-		An3.addActionListener(this);
-		An3.setVisible(false);
+		for(int i = 0; i < 3; i++){
+			Ans[i] = new JButton();
+			Ans[i].setBounds(10 + (i*190),300,100,30); //setBounds(x,y,width,height)
+			add(Ans[i]);
+			Ans[i].addActionListener(this);
+			Ans[i].setVisible(false);
+		}
+		asignaValores();
 		
 		res = new JTextField("");
 		res.setBounds(200,300,80,30);
@@ -126,7 +91,6 @@ public class Problema extends JFrame implements ActionListener{
 		probar.addActionListener(this);
 		probar.setVisible(false);
 		
-		
 		for(int i = 0; i < 3; i++){
 			accionesFinales[i] = new JButton();
 			accionesFinales[i].setBounds(170,(i*50)+280,130,30);
@@ -135,7 +99,44 @@ public class Problema extends JFrame implements ActionListener{
 			accionesFinales[i].setVisible(false);
 		}
 		
-		asignaValores();
+		switch(per.getJefe()){
+			case 0: //Blanco
+			getContentPane().setBackground(new Color(240,240,240));
+			break;
+			case 1: //Amarillo
+			getContentPane().setBackground(new Color(230,245,0));
+			break;
+			case 2: //Verde
+			getContentPane().setBackground(new Color(0,220,70));
+			break;
+			case 3: //Azul
+			getContentPane().setBackground(new Color(0,80,200));
+			probl.setForeground(Color.white);
+			vidas.setForeground(Color.white);
+			msg.setForeground(Color.white);
+			vidaWizLb.setForeground(Color.white);
+			break;
+			case 4: //Marron
+			getContentPane().setBackground(new Color(170,130,80));
+			break;
+			case 5: //Rojo
+			getContentPane().setBackground(new Color(240,30,0));
+			break;
+			case 6: //Negro
+			getContentPane().setBackground(new Color(40,40,40));
+			probl.setForeground(Color.white);
+			vidas.setForeground(Color.white);
+			msg.setForeground(Color.white);
+			vidaWizLb.setForeground(Color.white);
+			break;
+			case 7: //???
+			getContentPane().setBackground(new Color(100,0,0));
+			probl.setForeground(Color.white);
+			vidas.setForeground(Color.white);
+			msg.setForeground(Color.white);
+			vidaWizLb.setForeground(Color.white);
+			break;
+		}
 	}
 	
 	public void actionPerformed(ActionEvent c){
@@ -143,9 +144,9 @@ public class Problema extends JFrame implements ActionListener{
 		if(c.getSource() == easyAttack){
 			easyAttack.setVisible(false);
 			hardAttack.setVisible(false);
-			An1.setVisible(true);
-			An2.setVisible(true);
-			An3.setVisible(true);
+			for(int i = 0; i < 3; i++){
+				Ans[i].setVisible(true);
+			}
 			volver.setVisible(true);
 		}
 		else if(c.getSource() == hardAttack){
@@ -158,14 +159,14 @@ public class Problema extends JFrame implements ActionListener{
 		else if(c.getSource() == volver){
 			easyAttack.setVisible(true);
 			hardAttack.setVisible(true);
-			An1.setVisible(false);
-			An2.setVisible(false);
-			An3.setVisible(false);
+			for(int i = 0; i < 3; i++){
+				Ans[i].setVisible(false);
+			}
 			volver.setVisible(false);
 			probar.setVisible(false);
 			res.setVisible(false);
 		}
-		else if(c.getSource() == An1){
+		else if(c.getSource() == Ans[0]){
 			if(A == n1 + n2){
 				asignaValores();
 				msg.setText("Correcto");
@@ -178,7 +179,7 @@ public class Problema extends JFrame implements ActionListener{
 				msg.setText("Falso");
 			}
 		}
-		else if(c.getSource() == An2){
+		else if(c.getSource() == Ans[1]){
 			if(B == n1 + n2){
 				asignaValores();
 				msg.setText("Correcto");
@@ -191,7 +192,7 @@ public class Problema extends JFrame implements ActionListener{
 				msg.setText("Falso");
 			}
 		}
-		else if(c.getSource() == An3){
+		else if(c.getSource() == Ans[2]){
 			if(C == n1 + n2){
 				asignaValores();
 				msg.setText("Correcto");
@@ -223,17 +224,33 @@ public class Problema extends JFrame implements ActionListener{
 			Audio.detener();
 			if(accionesFinales[0].getText().equals("Continuar")){
 				per.setJefe(per.getJefe() + 1);
-				n3 = new Mundo(per);
+				
+				if(per.getJefe() == 8){
+					JOptionPane.showMessageDialog(null, "Completaste mi juego!!!", "Felicidades!!!", JOptionPane.PLAIN_MESSAGE);
+					Inicio n1 = new Inicio();
+					n1.setBounds(0,0,300,330);
+					n1.setVisible(true);
+					n1.setResizable(false);
+					n1.setLocationRelativeTo(null);
+					this.setVisible(false);
+				}
+				else{
+					n3 = new Mundo(per);
+					n3.setBounds(0,0,500,450);
+					n3.setVisible(true);
+					n3.setResizable(false);
+					n3.setLocationRelativeTo(null);
+					this.setVisible(false);
+				}
 			}
 			else{
 				n3 = new Mundo((Personaje)ser.leerObjeto(1));
+				n3.setBounds(0,0,500,450);
+				n3.setVisible(true);
+				n3.setResizable(false);
+				n3.setLocationRelativeTo(null);
+				this.setVisible(false);
 			}
-			
-			n3.setBounds(0,0,500,450);
-			n3.setVisible(true);
-			n3.setResizable(false);
-			n3.setLocationRelativeTo(null);
-			this.setVisible(false);
 		}
 		else if(c.getSource() == accionesFinales[1]){
 			Audio.detener();
@@ -254,9 +271,9 @@ public class Problema extends JFrame implements ActionListener{
 			msg.setText("");
 			easyAttack.setVisible(false);
 			hardAttack.setVisible(false);
-			An1.setVisible(false);
-			An2.setVisible(false);
-			An3.setVisible(false);
+			for(int i = 0; i < 3; i++){
+				Ans[i].setVisible(false);
+			}
 			volver.setVisible(false);
 			probar.setVisible(false);
 			res.setVisible(false);
@@ -277,9 +294,9 @@ public class Problema extends JFrame implements ActionListener{
 			msg.setText("");
 			easyAttack.setVisible(false);
 			hardAttack.setVisible(false);
-			An1.setVisible(false);
-			An2.setVisible(false);
-			An3.setVisible(false);
+			for(int i = 0; i < 3; i++){
+				Ans[i].setVisible(false);
+			}
 			volver.setVisible(false);
 			probar.setVisible(false);
 			res.setVisible(false);
@@ -306,16 +323,6 @@ public class Problema extends JFrame implements ActionListener{
 				Audio.detener();
 				audio.Musica("Derrota");
 			}
-		}
-		
-		if(per.getJefe() == 7){
-			JOptionPane.showMessageDialog(null, "Completaste mi juego!!!", "Felicidades!!!", JOptionPane.PLAIN_MESSAGE);
-			Inicio n1 = new Inicio();
-			n1.setBounds(0,0,300,330);
-			n1.setVisible(true);
-			n1.setResizable(false);
-			n1.setLocationRelativeTo(null);
-			this.setVisible(false);
 		}
 	}
 	
@@ -398,9 +405,16 @@ public class Problema extends JFrame implements ActionListener{
 			}
 		}
 		
-		An1.setText(Integer.toString(A));
-		An2.setText(Integer.toString(B));
-		An3.setText(Integer.toString(C));
+		
+		for(int i = 0; i < 3; i++){
+			if(i == 0)
+				Ans[i].setText(Integer.toString(A));
+			else if(i == 1)
+				Ans[i].setText(Integer.toString(B));
+			else if(i == 2)
+				Ans[i].setText(Integer.toString(C));
+		}
+		
 		probl.setText(n1 + " + " + n2 + " = ?");
 	}
 	
@@ -408,7 +422,7 @@ public class Problema extends JFrame implements ActionListener{
 		for(int j = 0; j < i; j++){
 			this.dificultadInicial *= 10;
 			this.aumentoDeDificultad *= 10;
-			this.vidaHechizeros += 10;
+			this.vidaHechizeros += 12;
 			this.ataqueFacil++;
 			this.ataqueDificil += 2;
 		}
