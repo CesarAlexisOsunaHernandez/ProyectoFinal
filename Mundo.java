@@ -110,10 +110,8 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		silencio.addActionListener(this);
 		volumen.add(silencio);
 		
-		idioma = new JMenuItem("Idioma");
-		m1.add(idioma);
-		
 		salir = new JMenuItem("Salir");
+		salir.addActionListener(this);
 		m1.add(salir);
 		
 		
@@ -130,12 +128,12 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			mensaje.setLocation(2100 - distanciaRecorrida, 170);
 			
 			if(per.getCastillo()){
-				castillo.setVisible(true);
+				verCastillo();
 			}
-			
+			System.out.println("Castillo: " + per.getCastillo());
 			for(int i = 0; i < 8; i++){
 				banderas[i].setLocation(1850 - distanciaRecorrida, 50);
-				hechizeros[i].setLocation(750 - distanciaRecorrida, 100);
+				hechizeros[i].setLocation(610 - distanciaRecorrida, 70);
 			}
 		}
 		
@@ -145,14 +143,17 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 	public void actionPerformed(ActionEvent a){
 		if(a.getSource() == slots[0]){
 			per.setDistancia(distanciaRecorrida);
+			System.out.println("Distancia gua: "+ per.getDistancia());
 			ser.escribirObjeto(per, 1);
 		}
 		else if(a.getSource() == slots[1]){
 			per.setDistancia(distanciaRecorrida);
+			System.out.println("Distancia gua: "+ distanciaRecorrida);
 			ser.escribirObjeto(per, 2);
 		}
 		else if(a.getSource() == slots[2]){
 			per.setDistancia(distanciaRecorrida);
+			System.out.println("Distancia gua: "+ distanciaRecorrida);
 			ser.escribirObjeto(per, 3);
 		}
 		else if(a.getSource() == alto){
@@ -176,7 +177,8 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			}
 		}
 		else if(a.getSource() == salir){
-			
+			Audio.detener();
+			System.exit(0);
 		}
 		
 	}
@@ -322,19 +324,8 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		}
 		
 		if(mensaje.isVisible() == true && e.getKeyCode() == 10 && castillo.isVisible() == false){
-			Audio.detener();
-			floor1.setVisible(false);
-			floor2.setVisible(false);
-			torre.setVisible(false);
-			banderas[per.getJefe()].setVisible(false);
-			mensaje.setVisible(false);
-			castillo.setVisible(true);
-			castillo.setLocation(-15, 0);
-			hechizeros[per.getJefe()].setVisible(true);
-			hechizeros[per.getJefe()].setLocation(610, 70);
 			distanciaRecorrida = 0;
-			per.setCastillo(true);
-			audio.Musica("Castillo");
+			verCastillo();
 		}
 		else if(mensaje.isVisible() == true && e.getKeyCode() == 10 && castillo.isVisible() == true){
 			Audio.detener();
@@ -345,8 +336,25 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			n4.setLocationRelativeTo(null);
 			this.setVisible(false);
 		}
+		System.out.println("Distancia: "+ distanciaRecorrida);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {}
+	
+	private void verCastillo(){
+		Audio.detener();
+		floor1.setVisible(false);
+		floor2.setVisible(false);
+		torre.setVisible(false);
+		banderas[per.getJefe()].setVisible(false);
+		mensaje.setVisible(false);
+		castillo.setVisible(true);
+		castillo.setLocation(-distanciaRecorrida, 0);
+		hechizeros[per.getJefe()].setVisible(true);
+		hechizeros[per.getJefe()].setLocation(610 - distanciaRecorrida, 70);
+		per.setCastillo(true);
+		audio.Musica("Castillo");
+		System.out.println("Castillo: " + per.getCastillo());
+	}
 }

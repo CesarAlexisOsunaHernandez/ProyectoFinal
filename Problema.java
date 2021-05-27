@@ -340,19 +340,15 @@ public class Problema extends JFrame implements ActionListener{
 		B = ran.nextInt(30);
 		C = ran.nextInt(30);
 		
-		//System.out.println("A: " + A + " B: " + B + " C: " + C);
-		
 		if(A > B && A > C){
 			A = n1 + n2;
 			if(B > C){
 				B = n1 + v1;
 				C = n1 + v2;
-				//System.out.println("A: " + A + " B: " + B + " C: " + C);
 			}
 			else{
 				C = n1 + v1;
 				B = n1 + v2;
-				//System.out.println("A: " + A + " B: " + B + " C: " + C);
 			}
 		}
 		else if(B > A && B > C){
@@ -360,12 +356,10 @@ public class Problema extends JFrame implements ActionListener{
 			if(A > C){
 				A = n1 + v1;
 				C = n1 + v2;
-				//System.out.println("A: " + A + " B: " + B + " C: " + C);
 			}
 			else{
 				C = n1 + v1;
 				A = n1 + v2;
-				//System.out.println("A: " + A + " B: " + B + " C: " + C);
 			}
 		}
 		else if(C > A && C > B){
@@ -373,12 +367,10 @@ public class Problema extends JFrame implements ActionListener{
 			if(A > B){
 				A = n1 + v1;
 				B = n1 + v2;
-				//System.out.println("A: " + A + " B: " + B + " C: " + C);
 			}
 			else{
 				B = n1 + v1;
 				A = n1 + v2;
-				//System.out.println("A: " + A + " B: " + B + " C: " + C);
 			}
 		}
 		

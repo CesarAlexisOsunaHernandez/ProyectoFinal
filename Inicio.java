@@ -13,9 +13,8 @@ public class Inicio extends JFrame implements ActionListener{
 	
 	public Inicio(){
 		setLayout(null);
-		//setTitle("Heroe Matematico: Primaria");
 		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/icono.png")).getImage());
-		this.setBounds(0,0,300,350);
+		this.setBounds(0,0,300,300);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -31,14 +30,8 @@ public class Inicio extends JFrame implements ActionListener{
 		add(nuevoJuego);
 		nuevoJuego.addActionListener(this);
 		
-		idioma = new JButton("Idioma");
-		idioma.setBounds(85,200,110,30);
-		//idioma.setFont(new Font("Andale Mono", 1, 30));
-		add(idioma);
-		idioma.addActionListener(this);
-		
 		salir = new JButton("Cerrar");
-		salir.setBounds(85,250,110,30);
+		salir.setBounds(85,200,110,30);
 		add(salir);
 		salir.addActionListener(this);
 		
@@ -47,24 +40,9 @@ public class Inicio extends JFrame implements ActionListener{
 		add(continuarJuego);
 		continuarJuego.addActionListener(this);
 		
-		for(int i = 0; i < 3 ; i++){
-			if(ser.leerObjeto(i+1) == null){
-				continuarJuego.setEnabled(false);
-			}
+		if(ser.leerObjeto(1) == null && ser.leerObjeto(2) == null && ser.leerObjeto(3) == null){
+			continuarJuego.setEnabled(false);
 		}
-		
-		cb = new JComboBox();
-		cb.setBounds(10,10,80,20);
-		cb.setVisible(false);
-		add(cb);
-		
-		cb.addItem("Espa\u00f1ol");
-		cb.addItem("English");
-		/*
-		cb.addItem("Francais");
-		cb.addItem("\u0639\u0631\u0628");
-		cb.addItemListener(this);
-		*/
 		
 		audio.Musica("Inicio");
 	}
@@ -95,15 +73,6 @@ public class Inicio extends JFrame implements ActionListener{
 				n3.setLocationRelativeTo(null);
 				this.setVisible(false);
 			}
-		}
-		else if(c.getSource() == idioma){
-			JComboBox cb = new JComboBox(idiomas);
-			int input = JOptionPane.showConfirmDialog(this, cb, "Idioma", JOptionPane.DEFAULT_OPTION);
-			if(input == JOptionPane.OK_OPTION){
-				String str = (String)cb.getSelectedItem();
-				System.out.println(str);
-			}
-			
 		}
 		else if(c.getSource() == salir){
 			Audio.detener();

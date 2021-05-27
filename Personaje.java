@@ -25,7 +25,7 @@ public class Personaje implements Serializable{
 	}
 	
 	public void setCastillo(boolean castillo){
-		this.genero = genero;
+		this.castillo = castillo;
 	}
 	
 	public int getDistancia(){
