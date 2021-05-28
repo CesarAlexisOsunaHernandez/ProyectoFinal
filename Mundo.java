@@ -15,7 +15,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 	private Personaje per = new Personaje();
 	private Audio audio = new Audio();
 	
-	public Mundo(Personaje per){
+	public Mundo(Personaje per, boolean seleccionContinue){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500,450);
 		this.setLayout(null);
@@ -112,14 +112,14 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		salir.addActionListener(this);
 		m1.add(salir);
 		
-		
-		
 		castillo = new JLabel(new ImageIcon("IMAGENES/KingsRoom.png"));
 		castillo.setBounds(0, 0, 814, 403);
 		castillo.setVisible(false);
 		this.add(castillo);
 		
-		if(per.getGenero().length() != 0){
+		audio.Musica("Mundo");
+		
+		if(per.getGenero().length() != 0 && seleccionContinue == true){
 			this.distanciaRecorrida = per.getDistancia();
 			torre.setLocation(2000 - distanciaRecorrida, -110);
 			castillo.setLocation(-distanciaRecorrida, 0);
@@ -133,8 +133,6 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 				hechizeros[i].setLocation(610 - distanciaRecorrida, 70);
 			}
 		}
-		
-		audio.Musica("Mundo");
 	}
 	
 	public void actionPerformed(ActionEvent a){
@@ -311,6 +309,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		
 		if(mensaje.isVisible() == true && e.getKeyCode() == 10 && castillo.isVisible() == false){
 			distanciaRecorrida = 0;
+			Audio.detener();
 			verCastillo();
 		}
 		else if(mensaje.isVisible() == true && e.getKeyCode() == 10 && castillo.isVisible() == true){
@@ -328,7 +327,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 	public void keyReleased(KeyEvent e) {}
 	
 	private void verCastillo(){
-		Audio.detener();
+		audio.Musica("Castillo");
 		floor1.setVisible(false);
 		floor2.setVisible(false);
 		torre.setVisible(false);
@@ -339,6 +338,5 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		hechizeros[per.getJefe()].setVisible(true);
 		hechizeros[per.getJefe()].setLocation(610 - distanciaRecorrida, 70);
 		per.setCastillo(true);
-		audio.Musica("Castillo");
 	}
 }

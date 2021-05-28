@@ -67,7 +67,7 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 		}
 		else if(c.getSource() == siguiente){
 			Audio.detener();
-			Mundo n3 = new Mundo(per);
+			Mundo n3 = new Mundo(per, false);
 			n3.setBounds(0,0,500,450);
 			n3.setVisible(true);
 			n3.setResizable(false);

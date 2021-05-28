@@ -23,7 +23,6 @@ public class Inicio extends JFrame implements ActionListener{
 		
 		premio = new JLabel(new ImageIcon("IMAGENES/Premio.png"));
 		premio.setBounds(20,40,50,59);
-		System.out.println(per.getJefe());
 		if(per.getJefe() == 8){
 			premio.setVisible(true);
 		}
@@ -74,7 +73,9 @@ public class Inicio extends JFrame implements ActionListener{
 			this.setVisible(false);
 		}
 		else if(c.getSource() == continuarJuego){
+			//Audio.detener();
 			if(MC.elegirContinue() == JOptionPane.OK_OPTION){
+				Audio.detener();
 				this.setVisible(false);
 			}
 		}

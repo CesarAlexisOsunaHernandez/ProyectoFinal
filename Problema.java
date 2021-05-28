@@ -236,7 +236,7 @@ public class Problema extends JFrame implements ActionListener{
 					this.setVisible(false);
 				}
 				else{
-					n3 = new Mundo(per);
+					n3 = new Mundo(per, false);
 					n3.setBounds(0,0,500,450);
 					n3.setVisible(true);
 					n3.setResizable(false);

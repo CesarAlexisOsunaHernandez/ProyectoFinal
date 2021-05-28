@@ -23,8 +23,9 @@ public class ManejarContinues{
 		input = JOptionPane.showConfirmDialog(null, cb, "Espacio", JOptionPane.DEFAULT_OPTION);
 		
 		if(input == JOptionPane.OK_OPTION){
+			Audio.detener();
 			op = Integer.parseInt((String)cb.getSelectedItem());
-			Mundo n3 = new Mundo((Personaje)ser.leerObjeto(op));
+			Mundo n3 = new Mundo((Personaje)ser.leerObjeto(op), true);
 			n3.setBounds(0,0,500,450);
 			n3.setVisible(true);
 			n3.setResizable(false);
