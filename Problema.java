@@ -228,7 +228,7 @@ public class Problema extends JFrame implements ActionListener{
 				
 				if(per.getJefe() == 8){
 					JOptionPane.showMessageDialog(null, "Completaste mi juego!!!", "Felicidades!!!", JOptionPane.PLAIN_MESSAGE);
-					Inicio n1 = new Inicio();
+					Inicio n1 = new Inicio(per);
 					n1.setBounds(0,0,300,330);
 					n1.setVisible(true);
 					n1.setResizable(false);
@@ -252,7 +252,7 @@ public class Problema extends JFrame implements ActionListener{
 		}
 		else if(c.getSource() == accionesFinales[1]){
 			Audio.detener();
-			Inicio n1 = new Inicio();
+			Inicio n1 = new Inicio(per);
 			n1.setBounds(0,0,300,330);
 			n1.setVisible(true);
 			n1.setResizable(false);
