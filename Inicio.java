@@ -4,12 +4,12 @@ import java.awt.event.*; //Boton ComboBox
 import javax.swing.event.*; //Checkbox
 
 public class Inicio extends JFrame implements ActionListener{
-	private JLabel titulo;
+	private JLabel titulo, logo;
 	private JButton nuevoJuego, continuarJuego, salir, idioma;
 	private JComboBox cb;
 	private Serializadora ser = new Serializadora();
 	private Audio audio = new Audio();
-	private String idiomas[] = {"Espa\u00f1ol", "English"}, Espanol, Ingles;
+	private ManejarContinues MC = new ManejarContinues();
 	
 	public Inicio(){
 		setLayout(null);
@@ -20,6 +20,10 @@ public class Inicio extends JFrame implements ActionListener{
 		this.setResizable(false);
 		getContentPane().setBackground(new Color(50,155,250));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		logo = new JLabel(new ImageIcon("IMAGENES/Icono.png"));
+		logo.setBounds(110,50,56,28);
+		add(logo);
 		
 		titulo = new JLabel("Heroe Matematico: Primaria");
 		titulo.setBounds(60,10,300,30);
@@ -59,18 +63,7 @@ public class Inicio extends JFrame implements ActionListener{
 			this.setVisible(false);
 		}
 		else if(c.getSource() == continuarJuego){
-			Audio.detener();
-			int input, op;
-			String ops[] = {"1","2","3"};
-			JComboBox cb = new JComboBox(ops);
-			input = JOptionPane.showConfirmDialog(this, cb, "Espacio", JOptionPane.DEFAULT_OPTION);
-			if(input == JOptionPane.OK_OPTION){
-				op = Integer.parseInt((String)cb.getSelectedItem());
-				Mundo n3 = new Mundo((Personaje)ser.leerObjeto(op));
-				n3.setBounds(0,0,500,450);
-				n3.setVisible(true);
-				n3.setResizable(false);
-				n3.setLocationRelativeTo(null);
+			if(MC.elegirContinue() == JOptionPane.OK_OPTION){
 				this.setVisible(false);
 			}
 		}

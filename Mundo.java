@@ -9,13 +9,11 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 	private JMenuBar mb1;
 	private JMenu m1, guardar, volumen;
 	private JMenuItem slots[] = new JMenuItem[3], alto, medio, bajo, silencio, idioma, salir;
-	private int x1 = 0, x2 = 1408, distanciaRecorrida = 0, i = 0;
+	private int distanciaRecorrida = 0, i = 0;
 	private static boolean cambio = true;
-	private File aux = new File("IMAGENES/Banderas.png");
 	private Serializadora ser = new Serializadora();
 	private Personaje per = new Personaje();
 	private Audio audio = new Audio();
-	private String idiomas[] = {"Espa\u00f1ol", "English"}, Espanol, Ingles;
 	
 	public Mundo(Personaje per){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,12 +66,12 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		torre.setBounds(2000, -110, 310, 420);
 		this.add(torre);
 		
-		floor1 = new JLabel(new ImageIcon("IMAGENES/Grass2.png"));
-		floor1.setBounds(x1, 275, x2, 151);
+		floor1 = new JLabel(new ImageIcon("IMAGENES/Grass.png"));
+		floor1.setBounds(0, 275, 1408, 151);
 		this.add(floor1);
 		
-		floor2 = new JLabel(new ImageIcon("IMAGENES/Grass2.png"));
-		floor2.setBounds(x1 + x2, 275, x2, 151);
+		floor2 = new JLabel(new ImageIcon("IMAGENES/Grass.png"));
+		floor2.setBounds(0 + 1408, 275, 1408, 151);
 		this.add(floor2);
 		
 		mb1 = new JMenuBar();
@@ -168,14 +166,6 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		else if(a.getSource() == silencio){
 			audio.setVolume((float)0.0);
 		}
-		else if(a.getSource() == idioma){
-			JComboBox cb = new JComboBox(idiomas);
-			int input = JOptionPane.showConfirmDialog(this, cb, "Idioma", JOptionPane.DEFAULT_OPTION);
-			if(input == JOptionPane.OK_OPTION){
-				String str = (String)cb.getSelectedItem();
-				System.out.println(str);
-			}
-		}
 		else if(a.getSource() == salir){
 			Audio.detener();
 			System.exit(0);
@@ -215,11 +205,11 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					distanciaRecorrida -= speed;
 				}
 				
-				if(floor2.getX() + (x2/2) > 216 && cambio == true){
-					floor1.setLocation(floor2.getX() - x2, floor1.getY());
+				if(floor2.getX() + (1408/2) > 216 && cambio == true){
+					floor1.setLocation(floor2.getX() - 1408, floor1.getY());
 					cambio = false;
-				}else if(floor1.getX() + (x2/2) > 216 && cambio == false){
-					floor2.setLocation(floor1.getX() - x2, floor2.getY());
+				}else if(floor1.getX() + (1408/2) > 216 && cambio == false){
+					floor2.setLocation(floor1.getX() - 1408, floor2.getY());
 					cambio = true;
 				}
 				
@@ -278,11 +268,11 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					distanciaRecorrida += speed;
 				}
 				
-				if(floor2.getX() + (x2/2) < 216 && cambio == true){
-					floor1.setLocation(floor2.getX() + x2, floor1.getY());
+				if(floor2.getX() + (1408/2) < 216 && cambio == true){
+					floor1.setLocation(floor2.getX() + 1408, floor1.getY());
 					cambio = false;
-				}else if(floor1.getX() + (x2/2) < 216 && cambio == false){
-					floor2.setLocation(floor1.getX() + x2, floor2.getY());
+				}else if(floor1.getX() + (1408/2) < 216 && cambio == false){
+					floor2.setLocation(floor1.getX() + 1408, floor2.getY());
 					cambio = true;
 				}
 				
@@ -336,7 +326,6 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			n4.setLocationRelativeTo(null);
 			this.setVisible(false);
 		}
-		System.out.println("Distancia: "+ distanciaRecorrida);
 	}
 
 	@Override

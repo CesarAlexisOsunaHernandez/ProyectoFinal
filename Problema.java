@@ -11,6 +11,7 @@ public class Problema extends JFrame implements ActionListener{
 	private Serializadora ser = new Serializadora();
 	private Personaje per = new Personaje();
 	private Audio audio = new Audio();
+	private ManejarContinues MC = new ManejarContinues();
 	
 	public Problema(Personaje per){
 		setLayout(null);
@@ -244,12 +245,9 @@ public class Problema extends JFrame implements ActionListener{
 				}
 			}
 			else{
-				n3 = new Mundo((Personaje)ser.leerObjeto(1));
-				n3.setBounds(0,0,500,450);
-				n3.setVisible(true);
-				n3.setResizable(false);
-				n3.setLocationRelativeTo(null);
-				this.setVisible(false);
+				if(MC.elegirContinue() == JOptionPane.OK_OPTION){
+					this.setVisible(false);
+				}
 			}
 		}
 		else if(c.getSource() == accionesFinales[1]){

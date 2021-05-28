@@ -6,8 +6,6 @@ import java.io.*; //File
 public class ElijePersonaje extends JFrame implements ActionListener{
 	private JLabel personaje, hom, mu;
 	private JButton hombre, mujer, siguiente;
-	//private Sprites sprite;
-	private File aux = new File("IMAGENES/NessSprites.png");
 	private Personaje per = new Personaje();
 	private Audio audio = new Audio();
 	
@@ -25,15 +23,12 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 		personaje.setBounds(80,10,300,30);
 		add(personaje);
 		
-		ImageIcon imagen = new ImageIcon("IMAGENES/Paula.png");
-		mu = new JLabel(imagen);
+		mu = new JLabel(new ImageIcon("IMAGENES/Paula.png"));
 		mu.setBounds(140,70,70,100);
 		mu.setVisible(false);
 		add(mu);
 		
-		ImageIcon nino = new ImageIcon("IMAGENES/NessFront.png");
-		//ImageIcon nino = Sprites.obtenerImagen(aux, 5, 68, 108);
-		hom = new JLabel(nino);
+		hom = new JLabel(new ImageIcon("IMAGENES/Ness.png"));
 		hom.setBounds(140,70,70,110);
 		hom.setVisible(false);
 		add(hom);
@@ -42,13 +37,11 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 		hombre.setBounds(30,80,80,30); //setBounds(x,y,width,height)
 		add(hombre);
 		hombre.addActionListener(this);
-		//b1.setVisible(false);
 		
 		mujer = new JButton("Ni\u00f1a");
 		mujer.setBounds(30,130,80,30); //setBounds(x,y,width,height)
 		add(mujer);
 		mujer.addActionListener(this);
-		//b2.setVisible(false);
 		
 		siguiente = new JButton("Siguiente");
 		siguiente.setBounds(30,200,100,30); //setBounds(x,y,width,height)

@@ -22,7 +22,7 @@ public class Serializadora{
 			obj = leer.readObject();
 		}
 		catch(Exception e){
-			System.out.println("Error");
+			//Archivo vacio o no encontrado
 		}
 		return obj;
 	}
