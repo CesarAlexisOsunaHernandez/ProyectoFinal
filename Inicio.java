@@ -13,7 +13,7 @@ public class Inicio extends JFrame implements ActionListener{
 	
 	public Inicio(){
 		setLayout(null);
-		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/icono.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/Icono.png")).getImage());
 		this.setBounds(0,0,300,300);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);

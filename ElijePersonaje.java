@@ -12,7 +12,7 @@ public class ElijePersonaje extends JFrame implements ActionListener{
 	public ElijePersonaje(){
 		
 		setLayout(null);
-		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/icono.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/Icono.png")).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(50,155,250));
 		this.setBounds(0,0,300,300);

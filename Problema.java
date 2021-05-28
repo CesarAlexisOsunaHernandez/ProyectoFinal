@@ -16,7 +16,7 @@ public class Problema extends JFrame implements ActionListener{
 	public Problema(Personaje per){
 		setLayout(null);
 		setTitle("Heroe Matematico: Primaria");
-		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/icono.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/Icono.png")).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBounds(0,0,500,450);
 		this.setVisible(true);

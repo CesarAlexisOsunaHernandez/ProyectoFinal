@@ -20,7 +20,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		this.setSize(500,450);
 		this.setLayout(null);
 		setTitle("Heroe Matematico: Primaria");
-		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/icono.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/Icono.png")).getImage());
 		this.addKeyListener(this);
 		getContentPane().setBackground(new Color(0,155,255));
 		
@@ -128,7 +128,6 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			if(per.getCastillo()){
 				verCastillo();
 			}
-			System.out.println("Castillo: " + per.getCastillo());
 			for(int i = 0; i < 8; i++){
 				banderas[i].setLocation(1850 - distanciaRecorrida, 50);
 				hechizeros[i].setLocation(610 - distanciaRecorrida, 70);
@@ -141,17 +140,14 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 	public void actionPerformed(ActionEvent a){
 		if(a.getSource() == slots[0]){
 			per.setDistancia(distanciaRecorrida);
-			System.out.println("Distancia gua: "+ per.getDistancia());
 			ser.escribirObjeto(per, 1);
 		}
 		else if(a.getSource() == slots[1]){
 			per.setDistancia(distanciaRecorrida);
-			System.out.println("Distancia gua: "+ distanciaRecorrida);
 			ser.escribirObjeto(per, 2);
 		}
 		else if(a.getSource() == slots[2]){
 			per.setDistancia(distanciaRecorrida);
-			System.out.println("Distancia gua: "+ distanciaRecorrida);
 			ser.escribirObjeto(per, 3);
 		}
 		else if(a.getSource() == alto){
@@ -344,6 +340,5 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		hechizeros[per.getJefe()].setLocation(610 - distanciaRecorrida, 70);
 		per.setCastillo(true);
 		audio.Musica("Castillo");
-		System.out.println("Castillo: " + per.getCastillo());
 	}
 }
