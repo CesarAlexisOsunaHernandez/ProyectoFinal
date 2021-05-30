@@ -37,22 +37,27 @@ public class Inicio extends JFrame implements ActionListener{
 		
 		titulo = new JLabel("Heroe Matematico: Primaria");
 		titulo.setBounds(60,10,300,30);
+		titulo.setVisible(true);
 		add(titulo);
 		
 		nuevoJuego = new JButton("Nuevo juego");
 		nuevoJuego.setBounds(85,100,110,30);
 		add(nuevoJuego);
+		nuevoJuego.setVisible(true);
 		nuevoJuego.addActionListener(this);
-		
-		salir = new JButton("Cerrar");
-		salir.setBounds(85,200,110,30);
-		add(salir);
-		salir.addActionListener(this);
 		
 		continuarJuego = new JButton("Continuar");
 		continuarJuego.setBounds(85,150,110,30);
-		add(continuarJuego);
 		continuarJuego.addActionListener(this);
+		add(continuarJuego);
+		
+		
+		salir = new JButton("Cerrar");
+		salir.setBounds(85,200,110,30);
+		salir.setVisible(true);
+		salir.addActionListener(this);
+		add(salir);
+		
 		
 		if(ser.leerObjeto(1) == null && ser.leerObjeto(2) == null && ser.leerObjeto(3) == null){
 			continuarJuego.setEnabled(false);
@@ -73,9 +78,7 @@ public class Inicio extends JFrame implements ActionListener{
 			this.setVisible(false);
 		}
 		else if(c.getSource() == continuarJuego){
-			//Audio.detener();
 			if(MC.elegirContinue() == JOptionPane.OK_OPTION){
-				Audio.detener();
 				this.setVisible(false);
 			}
 		}
@@ -85,9 +88,9 @@ public class Inicio extends JFrame implements ActionListener{
 		}
 		
 	}
-	/*
+	
 	public static void main(String args[]){
-		Inicio n1 = new Inicio();
+		Inicio n1 = new Inicio(new Personaje());
 		//n1.setBounds(0,0,500,500);
-	}*/
+	}
 }

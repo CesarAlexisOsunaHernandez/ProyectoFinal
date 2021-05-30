@@ -37,15 +37,19 @@ public class ManejarContinues{
 	
 	private void nombrarContinues(String ops[]){
 		int i = 0;
-		if(ser.leerObjeto(1) != null)
+		if(ser.leerObjeto(1) != null){
 			ops[i] = "1";
 			i++;
+		}
 			
-		if(ser.leerObjeto(2) != null)
+		if(ser.leerObjeto(2) != null){
 			ops[i] = "2";
 			i++;
+		}
 			
-		if(ser.leerObjeto(3) != null)
+		if(ser.leerObjeto(3) != null){
 			ops[i] = "3";
+			i++;
+		}
 	}
 }

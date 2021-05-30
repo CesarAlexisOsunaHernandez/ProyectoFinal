@@ -117,6 +117,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		castillo.setVisible(false);
 		this.add(castillo);
 		
+		Audio.detener();
 		audio.Musica("Mundo");
 		
 		if(per.getGenero().length() != 0 && seleccionContinue == true){
@@ -126,6 +127,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			mensaje.setLocation(2100 - distanciaRecorrida, 170);
 			
 			if(per.getCastillo()){
+				Audio.detener();
 				verCastillo();
 			}
 			for(int i = 0; i < 8; i++){
@@ -184,7 +186,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 				if(distanciaRecorrida <= 0 && player.getX() >= 20){
 					player.setLocation(player.getX()-speed, player.getY());
 					distanciaRecorrida -= speed;
-				}else if(player.getX() >= 20){
+				}else if(player.getX() > 20){
 					floor1.setLocation(floor1.getX()+speed, floor1.getY());
 					floor2.setLocation(floor2.getX()+speed, floor2.getY());
 					torre.setLocation(torre.getX()+speed, torre.getY());
@@ -199,6 +201,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					distanciaRecorrida -= speed;
 				}
 				
+				//Movimiento del piso
 				if(floor2.getX() + (1408/2) > 216 && cambio == true){
 					floor1.setLocation(floor2.getX() - 1408, floor1.getY());
 					cambio = false;
@@ -207,33 +210,11 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					cambio = true;
 				}
 				
-				if(per.getGenero().equals("hombre")){
-					if(i < 8){
-						PlayerL = new ImageIcon("IMAGENES/NessL1.png");
-						i++;
-					}else if(i < 16){
-						PlayerL = new ImageIcon("IMAGENES/NessL2.png");
-						i++;
-					}else{
-						i = 0;
-					}
-				}else{
-					if(i < 8){
-						PlayerL = new ImageIcon("IMAGENES/PaulaL1.png");
-						i++;
-					}else if(i < 16){
-						PlayerL = new ImageIcon("IMAGENES/PaulaL2.png");
-						i++;
-					}else{
-						i = 0;
-					}
-				}
-				
-				player.setIcon(PlayerL);
+				player.setIcon(cambiarSprites(PlayerL, "L")); //Cambio de Sprite(Izquierda)
 				break;
 			case 39: //Derecha
 				
-				if(distanciaRecorrida <= 0 && castillo.isVisible() == true){
+				if(distanciaRecorrida < 0 && castillo.isVisible() == true){
 					player.setLocation(player.getX()+speed, player.getY());
 					distanciaRecorrida += speed;
 				}
@@ -262,6 +243,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					distanciaRecorrida += speed;
 				}
 				
+				//Movimiento del piso
 				if(floor2.getX() + (1408/2) < 216 && cambio == true){
 					floor1.setLocation(floor2.getX() + 1408, floor1.getY());
 					cambio = false;
@@ -270,29 +252,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					cambio = true;
 				}
 				
-				if(per.getGenero().equals("hombre")){
-					if(i < 8){
-						PlayerR = new ImageIcon("IMAGENES/NessR1.png");
-						i++;
-					}else if(i < 16){
-						PlayerR = new ImageIcon("IMAGENES/NessR2.png");
-						i++;
-					}else{
-						i = 0;
-					}
-				}else{
-					if(i < 8){
-						PlayerR = new ImageIcon("IMAGENES/PaulaR1.png");
-						i++;
-					}else if(i < 16){
-						PlayerR = new ImageIcon("IMAGENES/PaulaR2.png");
-						i++;
-					}else{
-						i = 0;
-					}
-				}
-				
-				player.setIcon(PlayerR);
+				player.setIcon(cambiarSprites(PlayerR, "R")); //Cambio de Sprite(Derecha)
 				break;
 		}
 		
@@ -321,6 +281,8 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			n4.setLocationRelativeTo(null);
 			this.setVisible(false);
 		}
+		System.out.println("Castllo X: " + castillo.getX());
+		System.out.println("Distacia: " + distanciaRecorrida + "\n");
 	}
 
 	@Override
@@ -338,5 +300,31 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		hechizeros[per.getJefe()].setVisible(true);
 		hechizeros[per.getJefe()].setLocation(610 - distanciaRecorrida, 70);
 		per.setCastillo(true);
+	}
+	
+	private ImageIcon cambiarSprites(ImageIcon Player, String direccion){
+		if(per.getGenero().equals("hombre")){
+			if(i < 8){
+				i++;
+				return new ImageIcon("IMAGENES/Ness"+direccion+"1.png");
+			}else if(i < 16){
+				i++;
+				return new ImageIcon("IMAGENES/Ness"+direccion+"2.png");
+			}else{
+				i = 0;
+				return new ImageIcon("IMAGENES/Ness"+direccion+"1.png");
+			}
+		}else{
+			if(i < 8){
+				i++;
+				return new ImageIcon("IMAGENES/Paula"+direccion+"1.png");
+			}else if(i < 16){
+				i++;
+				return new ImageIcon("IMAGENES/Paula"+direccion+"2.png");
+			}else{
+				i = 0;
+				return new ImageIcon("IMAGENES/Paula"+direccion+"1.png");
+			}
+		}
 	}
 }
