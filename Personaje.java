@@ -2,7 +2,7 @@ import java.io.*; //Serializable
 
 public class Personaje implements Serializable{
 	private int distancia, jefe;
-	private String genero, idioma;
+	private String genero;
 	private boolean castillo;
 	
 	public Personaje(){

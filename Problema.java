@@ -3,9 +3,9 @@ import java.awt.Color; //Color
 import java.awt.event.*; //Boton, Textbox
 import java.util.*; //Random
 
-public class Problema extends JFrame implements ActionListener{
+public class Problema extends Pantalla{
 	private JLabel vidas, probl, msg, vidaWizLb, hechizeros[] = new JLabel[8];
-	private JButton Ans[] = new JButton[3], An2, An3, easyAttack, hardAttack, volver, probar, accionesFinales[] = new JButton[3];
+	private JButton Ans[] = new JButton[3], easyAttack, hardAttack, volver, probar, accionesFinales[] = new JButton[3];
 	private JTextField res;
 	private int lives = 3, A = 0, B = 0, C = 0, dificultadInicial = 1, n1 = 0, n2 = 0, vidaHechizeros = 10, aumentoDeDificultad = 1, ataqueFacil = 1, ataqueDificil = 3;
 	private Serializadora ser = new Serializadora();
@@ -14,14 +14,7 @@ public class Problema extends JFrame implements ActionListener{
 	private ManejarContinues MC = new ManejarContinues();
 	
 	public Problema(Personaje per){
-		setLayout(null);
-		setTitle("Heroe Matematico: Primaria");
-		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/Icono.png")).getImage());
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setBounds(0,0,500,450);
-		this.setVisible(true);
-		this.setResizable(false);
-		this.setLocationRelativeTo(null);
+		super(500, 450);
 		
 		this.per.setDistancia(per.getDistancia());
 		this.per.setJefe(per.getJefe());

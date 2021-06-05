@@ -3,23 +3,16 @@ import javax.swing.*; //Interfaz grafica
 import java.awt.event.*; //Boton ComboBox
 import javax.swing.event.*; //Checkbox
 
-public class Inicio extends JFrame implements ActionListener{
+public class Inicio extends Pantalla{
 	private JLabel titulo, logo, premio;
-	private JButton nuevoJuego, continuarJuego, salir, idioma;
+	private JButton nuevoJuego, continuarJuego, salir;
 	private JComboBox cb;
 	private Serializadora ser = new Serializadora();
 	private Audio audio = new Audio();
 	private ManejarContinues MC = new ManejarContinues();
 	
 	public Inicio(Personaje per){
-		setLayout(null);
-		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/Icono.png")).getImage());
-		this.setBounds(0,0,300,300);
-		this.setVisible(true);
-		this.setLocationRelativeTo(null);
-		this.setResizable(false);
-		getContentPane().setBackground(new Color(50,155,250));
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		super(300, 300);
 		
 		premio = new JLabel(new ImageIcon("IMAGENES/Premio.png"));
 		premio.setBounds(20,40,50,59);
@@ -87,10 +80,5 @@ public class Inicio extends JFrame implements ActionListener{
 			System.exit(0);
 		}
 		
-	}
-	
-	public static void main(String args[]){
-		Inicio n1 = new Inicio(new Personaje());
-		//n1.setBounds(0,0,500,500);
 	}
 }

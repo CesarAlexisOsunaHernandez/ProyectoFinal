@@ -3,12 +3,12 @@ import java.awt.event.*; //Boton
 import javax.swing.*; //Interfaz grafica
 import java.io.*; //File
 
-public class Mundo extends JFrame implements KeyListener, ActionListener{
+public class Mundo extends Pantalla{
 	private JLabel player, floor1, floor2, torre, banderas[] = new JLabel[8], mensaje, castillo, hechizeros[] = new JLabel[8];
 	private ImageIcon PlayerL, PlayerR;
 	private JMenuBar mb1;
 	private JMenu m1, guardar, volumen;
-	private JMenuItem slots[] = new JMenuItem[3], alto, medio, bajo, silencio, idioma, salir;
+	private JMenuItem slots[] = new JMenuItem[3], alto, medio, bajo, silencio, salir;
 	private int distanciaRecorrida = 0, i = 0;
 	private static boolean cambio = true;
 	private Serializadora ser = new Serializadora();
@@ -16,13 +16,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 	private Audio audio = new Audio();
 	
 	public Mundo(Personaje per, boolean seleccionContinue){
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(500,450);
-		this.setLayout(null);
-		setTitle("Heroe Matematico: Primaria");
-		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/Icono.png")).getImage());
-		this.addKeyListener(this);
-		getContentPane().setBackground(new Color(0,155,255));
+		super(500, 450);
 		
 		this.per.setDistancia(per.getDistancia());
 		this.per.setJefe(per.getJefe());
@@ -210,7 +204,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					cambio = true;
 				}
 				
-				player.setIcon(cambiarSprites(PlayerL, "L")); //Cambio de Sprite(Izquierda)
+				player.setIcon(cambiarSprites("L")); //Cambio de Sprite(Izquierda)
 				break;
 			case 39: //Derecha
 				
@@ -252,7 +246,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 					cambio = true;
 				}
 				
-				player.setIcon(cambiarSprites(PlayerR, "R")); //Cambio de Sprite(Derecha)
+				player.setIcon(cambiarSprites("R")); //Cambio de Sprite(Derecha)
 				break;
 		}
 		
@@ -261,7 +255,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		}else if(distanciaRecorrida == 315 && castillo.isVisible() == true){
 			mensaje.setText("     Pelear");
 			mensaje.setVisible(true);
-			mensaje.setLocation(220, 170);
+			mensaje.setLocation(200, 170);
 		}
 		else{
 			mensaje.setVisible(false);
@@ -281,8 +275,6 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 			n4.setLocationRelativeTo(null);
 			this.setVisible(false);
 		}
-		System.out.println("Castllo X: " + castillo.getX());
-		System.out.println("Distacia: " + distanciaRecorrida + "\n");
 	}
 
 	@Override
@@ -302,7 +294,7 @@ public class Mundo extends JFrame implements KeyListener, ActionListener{
 		per.setCastillo(true);
 	}
 	
-	private ImageIcon cambiarSprites(ImageIcon Player, String direccion){
+	private ImageIcon cambiarSprites(String direccion){
 		if(per.getGenero().equals("hombre")){
 			if(i < 8){
 				i++;

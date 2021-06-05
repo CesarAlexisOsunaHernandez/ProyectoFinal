@@ -3,21 +3,14 @@ import java.awt.Color; //Color
 import java.awt.event.*; //Boton
 import java.io.*; //File
 
-public class ElijePersonaje extends JFrame implements ActionListener{
+public class ElijePersonaje extends Pantalla{
 	private JLabel personaje, hom, mu;
 	private JButton hombre, mujer, siguiente;
 	private Personaje per = new Personaje();
 	private Audio audio = new Audio();
 	
 	public ElijePersonaje(){
-		
-		setLayout(null);
-		setIconImage(new ImageIcon(getClass().getResource("IMAGENES/Icono.png")).getImage());
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		getContentPane().setBackground(new Color(50,155,250));
-		this.setBounds(0,0,300,300);
-		this.setVisible(true);
-		this.setLocationRelativeTo(null);
+		super(300, 300);
 		
 		personaje = new JLabel("Haz tu personaje");
 		personaje.setBounds(80,10,300,30);

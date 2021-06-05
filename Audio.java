@@ -8,7 +8,7 @@ public class Audio {
 
 	public void Musica(String name){
 		try {
-			audio =AudioSystem.getClip();
+			audio = AudioSystem.getClip();
 			audio.open(AudioSystem.getAudioInputStream(getClass().getResource(url+name+".wav")));
 			audio.start();
 			audio.loop(Clip.LOOP_CONTINUOUSLY);
